@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Week 8: Over</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <style>
+    body {
+	background-color: #3f3d4c;
+	font-family: 'Trebuchet MS', Helvetica, sans-serif;
+	font-size: 16px;	
+        color: #ff944d;
+        
+    }     
+    a:link, a:visited {
+    color: #ffb1b9;          
+                  
+      }
+    .section {
+      padding: 1em 0;
+    }
+    .header {
+      background: linear-gradient(to bottom, #302e39 0%, #5f5b71 100%); 
+      color: #ff944d;
+      padding: 1em 0 2em;
+    }
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+    .axis path, .axis line {
+      fill: none;
+      stroke: #ff944d;
+      shape-rendering: crispEdges;
+    }
+    .axis text {
+        font-size: 14px;
+        fill: #ff944d;
+    }
+    .label {
+      font-weight: 700;
+    }
+    .point {
+      stroke: rgb(51, 122, 183);
+      stroke-width: 1;
+      fill: rgba(51, 122, 183, .5);
+      opacity: .5;
+    }
+    .point.filtered {
+      opacity: .05;
+    }
+    .line {
+      stroke: rgb(175, 80, 75);
+      stroke-width: 2;
+    } 
+      
+    .axis .minor line {
+      stroke: #ff944d;
+      stroke-dasharray: 2,2;
+    }      
+      
+    .bar {  
+      fill: steelblue;
+    }     
+       
+    .ybar {
+      fill: steelblue;
+    }     
+             
+      
+  </style>
+</head>
+<body>
+<div class='header section'>
+  <div class='container'>
+    <h1>Week 8: Over and Out</h1>
+    <p>Import and Export data.</p>
+      
+    <p>Sources: <a href='https://www.census.gov/foreign-trade/balance/c4120.html'>Census.gov Trade Data, </a>  
+    <a href='http://www.investing.com/currencies/gbp-usd-historical-data'>Historical Exchange Rates</a></p>
+  </div>
+</div>
+<div class='controls section'>
+  <div class='container'>
+    <div class='btn-toolbar'>
+      <label for='region'>Region or Country: </label>
+      <select id='region'>
+        <option value='All'>All Countries</option>
+        <option value='Asia'>Asia</option>
+        <option value='Europe'>Europe</option>
+        <option value='Africa'>Africa</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class='main section'>
+  <div class='container'>
+    <div id='chart'></div>
+  </div>
+</div>
+    
+    <script type='text/javascript' src='https://npmcdn.com/d3@3.5.17/d3.min.js'></script>
+    <script type='text/javascript' src='https://npmcdn.com/science@1.9.3/science.v1.min.js'></script>
+    <script type='text/javascript' src='https://npmcdn.com/simple-statistics@2.0.0/dist/simple-statistics.min.js'></script>
+    <script type="text/javascript" src="https://npmcdn.com/d3-tip@0.6.7/index.js"></script>
+    
+<script>
+  var data = [];
+
+  var options = {
+    yearRange: 'all'
+  };
+    
+//  var svg, x, y;
+  var margin = { top: 15, right: 55, bottom: 100, left: 70  };
+  var width = 800 - margin.right - margin.left;
+  var height = 600 - margin.top - margin.bottom;
+  var binCount = 10;
+    
+  // FETCH DATA
+  d3.json('import-export.json', function (error, json) {
+    if (error) { throw error; }
+    data = json;
+      
+    var charts = [
+          new Chart('imp_total', 'Imports', 'exp_total', 'Exports')
+          ];
+      
+    // EVENT HANDLERS
+    d3.select('region').on('change', function () {
+      options.region = d3.event.target.value;
+        charts.forEach(function (chart) { chart.update(); });
+    });      
+      
+  });
+
+    
+  function Chart(xvar, xtitle, yvar, ytitle) {
+      var chart = this;
+      
+      chart.xvar = xvar;
+      chart.yvar = yvar;
+
+    // SVG
+      chart.svg = d3.select('#chart')
+      .append('svg')
+      .attr('width', width + margin.right + margin.left)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+      
+    // SCALES
+
+      var xmax = d3.max(data, function (d) { return d[xvar]; });            
+      
+      chart.x = d3.scale.linear()
+        .domain([0, d3.max(data, function (d) { return d[xvar]; })])
+        .range([0, width])
+        .nice();
+      
+      chart.y = d3.scale.linear()
+      .domain([0, d3.max(data, function (d) { return d[yvar]; })])    
+      .range([height, 0])    
+      .nice();
+      
+    // AXES
+      var xAxis = d3.svg.axis()
+      .scale(chart.x)
+      .tickSize(-height);
+      
+      var yAxis = d3.svg.axis()
+      .scale(chart.y)
+      .tickSize(-width)
+      .orient('left');   
+      
+      chart.svg.append('g')      
+          .attr('class', 'x axis')
+          .call(xAxis)
+          .attr('transform', 'translate(0,' + (height) + ')')
+        .append('text')
+          .attr('x', width/2)
+          .attr('y', 70)
+          .style('text-anchor', 'middle')
+          .text(xtitle);            
+      
+      chart.svg.append('g')
+          .attr('class', 'y axis')
+          .call(yAxis)
+        .append('text')
+          .attr('transform', 'rotate(-90)')
+          .attr('y', -60)
+          .attr('x', -height/2)      
+          .style('text-anchor', 'middle')      
+          .text(ytitle);           
+      
+      chart.xtool = d3.tip()
+      .attr('class', 'tooltip')
+      .offset([-6, 0])
+      .html(function(d) { return d.length ; });
+
+      chart.ytool = d3.tip()
+      .attr('class', 'tooltip')
+      .offset([0, 10])
+      .direction('e')
+      .html(function(d) { return d.length ; });
+
+    chart.xtool(chart.svg);      
+    chart.ytool(chart.svg);      
+      
+      chart.update();
+      
+  }
+      
+          
+    Chart.prototype.update = function () {
+    var chart = this;
+    txData = data.slice();
+        
+    if (options.yearRange !== 'all') {
+      var yearRange = options.yearRange.split('-');
+      txData = txData.filter(function (d) {
+        return d.year >= yearRange[0] && d.year <= yearRange[1];
+      });
+    }
+      
+        
+        
+    
+    
+        
+
+        
+    // SCATTERPLOT
+    var points = chart.svg.selectAll('.point')
+      .data(txData);
+      
+    points.enter().append('circle')
+      .attr('class', 'point')
+      .attr('r', 5);
+      
+    points
+      .attr('cx', function (d) { return chart.x(d.imp_total); })
+      .attr('cy', function (d) { return chart.y(d.exp_total); });
+
+      points.exit().remove();
+
+
+      
+    // REGRESSION LINE
+  }
+
+</script>
+</body>
+</html>
