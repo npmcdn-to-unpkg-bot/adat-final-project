@@ -197,13 +197,12 @@
       chart.xtool = d3.tip()
       .attr('class', 'tooltip')
       .offset([-6, 0])
-      .html(function(d) { return d.length ; });
+      .html(function(d) { return d.country ; });
 
       chart.ytool = d3.tip()
       .attr('class', 'tooltip')
       .offset([0, 10])
-      .direction('e')
-      .html(function(d) { return d.length ; });
+      .html(function(d) { return d.country ; });
 
     chart.xtool(chart.svg);      
     chart.ytool(chart.svg);      
@@ -224,21 +223,24 @@
       });
     }
       
-        
-        
-    
-    
-        
 
         
     // SCATTERPLOT
     var points = chart.svg.selectAll('.point')
       .data(txData);
       
+//    points.enter().append('circle')
+//      .attr('class', 'point')
+//      .attr('r', 5);
+      
     points.enter().append('circle')
       .attr('class', 'point')
-      .attr('r', 5);
-      
+      .attr('r', 5)
+          .on('mouseover', chart.xtool.show)
+      .on('mouseout', chart.xtool.hide); 
+    
+    
+        
     points
       .attr('cx', function (d) { return chart.x(d.imp_total); })
       .attr('cy', function (d) { return chart.y(d.exp_total); });
