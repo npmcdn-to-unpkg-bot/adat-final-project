@@ -1,0 +1,30 @@
+{
+ "name": "exports",
+ "children": [
+  {
+   "name": "world",
+   "children": [
+    {
+     "name": "goods",
+     "children": [
+      {"name": "capital", "size": 3938},
+      {"name": "industrial", "size": 3812},
+      {"name": "auto", "size": 6714},
+      {"name": "consumer", "size": 743}
+     ]
+    },
+    {
+     "name": "services",
+     "children": [
+      {"name": "finance", "size": 3534},
+      {"name": "insurance", "size": 5731},
+      {"name": "telecom", "size": 7840},
+      {"name": "maintenance", "size": 5914}
+     ]
+    }
+   ]
+      
+  }
+
+ ]
+}
