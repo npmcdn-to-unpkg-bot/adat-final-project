@@ -87,9 +87,12 @@
       <label for='region'>Region or Country: </label>
       <select id='region'>
         <option value='All'>All Countries</option>
+        <option value='Africa'>Africa</option>
         <option value='Asia'>Asia</option>
         <option value='Europe'>Europe</option>
-        <option value='Africa'>Africa</option>
+        <option value='LatAm'>Latin America</option>
+        <option value='Middle East'>Middle East</option>          
+        <option value='North America'>North America</option>          
       </select>
     </div>
   </div>
@@ -109,7 +112,7 @@
   var data = [];
 
   var options = {
-    reg: 'All'
+    region: 'All'
   };
     
 //  var svg, x, y;
@@ -129,9 +132,9 @@
       
     // EVENT HANDLERS
     d3.select('#region').on('change', function () {
-      options.reg = d3.event.target.value;
+      options.region = d3.event.target.value;
         charts.forEach(function (chart) { chart.update(); });
-        console.log('event', options.reg);
+        console.log('event', options.region);
     });      
       
   });
@@ -152,9 +155,7 @@
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
       
     // SCALES
-
-      var xmax = d3.max(data, function (d) { return d[xvar]; });            
-      
+ 
       chart.x = d3.scale.linear()
         .domain([0, d3.max(data, function (d) { return d[xvar]; })])
         .range([0, width])
@@ -209,14 +210,13 @@
           
     Chart.prototype.update = function () {
     var chart = this;
-    txData = data.slice();
-        console.log('reg is', options.reg);
+    IEdata = data.slice();
+        console.log('reg is', options.region);
         
-    if (options.reg !== 'All') {
+    if (options.region !== 'All') {
         
-//        console.log('does not', options.reg);
-      txData = txData.filter(function (d) {
-        return d.region == options.reg;
+      IEdata = IEdata.filter(function (d) {
+        return d.region == options.region;
       });
     }
       
@@ -224,7 +224,7 @@
         
     // SCATTERPLOT
     var points = chart.svg.selectAll('.point')
-      .data(txData);
+      .data(IEdata);
       
       
     points.enter().append('circle')
