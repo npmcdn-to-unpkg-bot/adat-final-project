@@ -109,7 +109,7 @@
   var data = [];
 
   var options = {
-    region: 'all'
+    reg: 'All'
   };
     
 //  var svg, x, y;
@@ -128,9 +128,10 @@
           ];
       
     // EVENT HANDLERS
-    d3.select('region').on('change', function () {
-      options.region = d3.event.target.value;
+    d3.select('#region').on('change', function () {
+      options.reg = d3.event.target.value;
         charts.forEach(function (chart) { chart.update(); });
+        console.log('event', options.reg);
     });      
       
   });
@@ -209,13 +210,13 @@
     Chart.prototype.update = function () {
     var chart = this;
     txData = data.slice();
+        console.log('reg is', options.reg);
         
-    if (options.region !== 'all') {
+    if (options.reg !== 'All') {
         
-        console.log('does not');
-//      var yearRange = options.yearRange.split('-');
+//        console.log('does not', options.reg);
       txData = txData.filter(function (d) {
-        return d.year >= yearRange[0] && d.year <= yearRange[1];
+        return d.region == options.reg;
       });
     }
       

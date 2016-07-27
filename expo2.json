@@ -23,6 +23,30 @@
      ]
     }
    ]
+  },
+     {
+      
+   "name": "Belgium",
+   "children": [
+    {
+     "name": "goos",
+     "children": [
+      {"name": "capit", "size": 3900},
+      {"name": "industrl", "size": 1812},
+      {"name": "aut", "size": 3714},
+      {"name": "consum", "size": 543}
+     ]
+    },
+    {
+     "name": "servis",
+     "children": [
+      {"name": "finan", "size": 1534},
+      {"name": "insuran", "size": 3731},
+      {"name": "telec", "size": 6840},
+      {"name": "maintenae", "size": 3914}
+     ]
+    }
+   ]      
       
   }
 

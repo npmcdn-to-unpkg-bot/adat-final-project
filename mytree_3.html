@@ -60,8 +60,8 @@
     var color = d3.scale.category20c();
     
     var margin = {top: 20, right: 5, bottom: 10, left: 5},
-    width = 1200 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;    
+    width = 1000 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;    
     
             
 var treemap = d3.layout.treemap()
@@ -78,7 +78,7 @@ var div = d3.select("body").append("div")
     .style("left", margin.left + "px")
     .style("top", margin.top + "px");
 
-//d3.json("flare2.json", function(error, root) {
+// d3.json("flare2.json", function(error, root) {
  d3.json("expo2.json", function(error, root) {
     if (error) throw error;
 

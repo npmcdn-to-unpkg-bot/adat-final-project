@@ -2,7 +2,7 @@
 	background-color: #DDEDEB;
 	font-family: 'Trebuchet MS', Helvetica, sans-serif;
 	font-size: 16px;	
-        color: #ff944d;
+/*        color: #20434F;*/
         
     }     
     a:link, a:visited {
@@ -23,12 +23,12 @@
     }
     .axis path, .axis line {
       fill: none;
-      stroke: #ff944d;
+      stroke: #20434F;
       shape-rendering: crispEdges;
     }
     .axis text {
         font-size: 14px;
-        fill: #ff944d;
+        fill: #20434F;
     }
     .label {
       font-weight: 700;
@@ -65,4 +65,7 @@ form {
   text-indent: 2px;
 }
        
+.bar {
+  fill: steelblue;
+}
   
