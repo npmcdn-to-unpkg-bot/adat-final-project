@@ -41,12 +41,12 @@
     .label {
       font-weight: 700;
     }
-/*    .point {
+    .point {
       stroke: rgb(51, 122, 183);
       stroke-width: 1;
-      fill: rgba(51, 122, 183, .5);
+/*      fill: rgba(51, 122, 183, .5);*/
       opacity: .5;
-    }*/
+    }
     .line {
       stroke: rgb(175, 80, 75);
       stroke-width: 2;
@@ -232,10 +232,13 @@
 
         
     points
+    .transition().duration(700)
       .attr('cx', function (d) { return chart.x(d.imports); })
       .attr('cy', function (d) { return chart.y(d.exports); });        
         
-      points.exit().remove();
+      points.exit()
+          .transition().duration(80)
+          .remove();
 
 
       
