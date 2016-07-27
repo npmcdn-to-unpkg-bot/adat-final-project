@@ -42,7 +42,7 @@
       font-weight: 700;
     }
     .point {
-      stroke: rgb(51, 122, 183);
+/*      stroke: rgb(51, 122, 183);*/
       stroke-width: 1;
 /*      fill: rgba(51, 122, 183, .5);*/
       opacity: .5;
@@ -70,7 +70,7 @@
 <div class='header section'>
   <div class='container'>
     <h1>Week 8: Import and Export Data</h1>
-    <p>The below graph shows US imports and exports broken down by trade and services. Trade refers to physical goods and services refers to non-physical goods.</p>
+    <p>The below graph shows US imports and exports broken down by trade and services. </p>
       
     <p>Sources: <a href='https://www.census.gov/foreign-trade/balance/c4120.html'>Census.gov Trade Data, </a>  
     <a href='http://www.bea.gov/iTable/bp_download_modern.cfm?pid=11'>Bureau of Economic Analysis</a></p>
@@ -219,12 +219,19 @@
           .attr('y', -60)
           .attr('x', -height/2)      
           .style('text-anchor', 'middle')      
-          .text(ytitle);           
-      
+          .text(ytitle);                 
+        
       chart.tool = d3.tip()
       .attr('class', 'tooltip')
       .offset([-6, 0])
-      .html(function(d) { return d.country ; });
+      .html(function(d) { return d.country + d.type ; });
+/*      .html(function(d) { 
+          var getCountry = document.getElementById(d.country);      
+          console.log('tip', getCountry);
+          
+          
+          
+          return d3.selectAll(getCountry) ; });      */
 
     chart.tool(chart.svg);      
       
