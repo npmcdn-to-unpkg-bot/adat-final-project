@@ -224,9 +224,9 @@
       .attr('r', 7)
 //    .attr('fill', function (d) { return 'red' ? d.type === 'trade' : 'blue'; })   
   .attr('fill', function (d) { 
-            if(d.type === 'trade') { return 'blue' }
-            else { return 'red' })      
-    
+            if (d.type === 'trade') { return 'blue'; }
+            else { return 'red'; } 
+        })    
       .on('mouseover', chart.tool.show)
       .on('mouseout', chart.tool.hide); 
 
