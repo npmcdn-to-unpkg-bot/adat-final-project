@@ -56,6 +56,10 @@
       stroke: #C95508;
       stroke-dasharray: 2,2;
     }      
+	table {
+		table-layout: auto;
+        vertical-align: top;
+	}      
       
    
              
@@ -88,9 +92,37 @@
     </div>
   </div>
 </div>
-<div class='main section'>
+<!--<div class='main section'>
   <div class='container'>
     <div id='chart'></div>
+  </div>
+</div>-->
+    
+    
+    
+<div class='main section'>
+  <div class='container'>
+    <table class="columns">
+      <tr>
+<!--        <td><div id="chart" style="border: 1px solid #ccc; width:90%"></div></td>-->
+        <td><div id="chart" style="width:80%"></div></td>          
+<!--          <td style='width: 20%; vertical-align: top'>-->
+          <td style='vertical-align: top'>              
+<!--        <td><div id="legend" style="border: 1px solid #ccc"></div>-->
+          <h3>Legend:</h3>
+              <p>All figures in the square root of millions of USD.</p>
+              <p>Trade is shown in blue and includes things such as:</p>
+              <ul>
+                  <li>Capital goods</li>
+                  <li>Industrial goods</li>                  
+                  <li>Auto and auto parts</li>
+              
+              </ul>
+          
+          </td>
+      </tr>
+	  
+    </table>    
   </div>
 </div>
     
@@ -246,5 +278,6 @@
   }
 
 </script>
+        
 </body>
 </html>
