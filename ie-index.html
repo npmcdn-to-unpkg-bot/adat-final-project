@@ -3,7 +3,7 @@
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <title>Week 8: Over</title>
+  <title>Week 8: Beginning of the End</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
   <style>
     body {
@@ -65,11 +65,11 @@
 <body>
 <div class='header section'>
   <div class='container'>
-    <h1>Week 8: Over and Out</h1>
-    <p>Import and Export data.</p>
+    <h1>Week 8: Import and Export Data</h1>
+    <p>The below graph shows US imports and exports broken down by trade and services. Trade refers to physical goods and services refers to non-physical goods.</p>
       
     <p>Sources: <a href='https://www.census.gov/foreign-trade/balance/c4120.html'>Census.gov Trade Data, </a>  
-    <a href='http://www.investing.com/currencies/gbp-usd-historical-data'>Historical Exchange Rates</a></p>
+    <a href='http://www.bea.gov/iTable/bp_download_modern.cfm?pid=11'>Bureau of Economic Analysis</a></p>
   </div>
 </div>
 <div class='controls section'>
@@ -222,8 +222,11 @@
     points.enter().append('circle')
       .attr('class', 'point')
       .attr('r', 7)
-//    .attr('fill', 'red')
-    .attr('fill', function (d) { return 'red' ? d.type === 'trade' : 'blue' })    
+//    .attr('fill', function (d) { return 'red' ? d.type === 'trade' : 'blue'; })   
+  .attr('fill', function (d) { 
+            if(d.type === 'trade') { return 'blue' }
+            else { return 'red' })      
+    
       .on('mouseover', chart.tool.show)
       .on('mouseout', chart.tool.hide); 
 
