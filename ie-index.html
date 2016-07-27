@@ -7,10 +7,10 @@
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
   <style>
     body {
-	background-color: #3f3d4c;
+	background-color: #D3E3E8;
 	font-family: 'Trebuchet MS', Helvetica, sans-serif;
 	font-size: 16px;	
-        color: #ff944d;
+    color: #C95508;
         
     }     
     a:link, a:visited {
@@ -31,42 +31,33 @@
     }
     .axis path, .axis line {
       fill: none;
-      stroke: #ff944d;
+      stroke: #C95508;
       shape-rendering: crispEdges;
     }
     .axis text {
         font-size: 14px;
-        fill: #ff944d;
+        fill: #C95508;
     }
     .label {
       font-weight: 700;
     }
-    .point {
+/*    .point {
       stroke: rgb(51, 122, 183);
       stroke-width: 1;
       fill: rgba(51, 122, 183, .5);
       opacity: .5;
-    }
-    .point.filtered {
-      opacity: .05;
-    }
+    }*/
     .line {
       stroke: rgb(175, 80, 75);
       stroke-width: 2;
     } 
       
     .axis .minor line {
-      stroke: #ff944d;
+      stroke: #C95508;
       stroke-dasharray: 2,2;
     }      
       
-    .bar {  
-      fill: steelblue;
-    }     
-       
-    .ybar {
-      fill: steelblue;
-    }     
+   
              
       
   </style>
@@ -127,7 +118,7 @@
     data = json;
       
     var charts = [
-          new Chart('imp_total', 'Imports', 'exp_total', 'Exports')
+          new Chart('imports', 'Imports', 'exports', 'Exports')
           ];
       
     // EVENT HANDLERS
@@ -145,6 +136,8 @@
       
       chart.xvar = xvar;
       chart.yvar = yvar;
+      chart.color = d3.scale.category10();
+      
 
     // SVG
       chart.svg = d3.select('#chart')
@@ -225,20 +218,20 @@
     // SCATTERPLOT
     var points = chart.svg.selectAll('.point')
       .data(IEdata);
-      
-      
+        
     points.enter().append('circle')
       .attr('class', 'point')
-      .attr('r', 5)
-          .on('mouseover', chart.tool.show)
+      .attr('r', 7)
+//    .attr('fill', 'red')
+    .attr('fill', function (d) { return 'red' ? d.type === 'trade' : 'blue' })    
+      .on('mouseover', chart.tool.show)
       .on('mouseout', chart.tool.hide); 
-    
-    
+
         
     points
-      .attr('cx', function (d) { return chart.x(d.imp_total); })
-      .attr('cy', function (d) { return chart.y(d.exp_total); });
-
+      .attr('cx', function (d) { return chart.x(d.imports); })
+      .attr('cy', function (d) { return chart.y(d.exports); });        
+        
       points.exit().remove();
 
 
