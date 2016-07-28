@@ -59,7 +59,18 @@
 	table {
 		table-layout: auto;
         vertical-align: top;
-	}      
+	}
+      .blueText {
+          color: #6971F4;
+          font-weight: bold;
+          font-size: 20px;
+      }
+      
+      .redText {
+          color: #E97174;          
+          font-weight: bold;          
+          font-size: 20px;          
+      }
       
    
              
@@ -101,7 +112,7 @@
     
     
 <div class='main section'>
-  <div class='container'>
+  <div class='container'; style='color: black'>
     <table class="columns">
       <tr>
 <!--        <td><div id="chart" style="border: 1px solid #ccc; width:90%"></div></td>-->
@@ -111,17 +122,21 @@
 <!--        <td><div id="legend" style="border: 1px solid #ccc"></div>-->
           <h3>Legend:</h3>
               <p>All figures in the square root of millions of USD.</p>
-              <p>Trade is shown in blue and includes things such as:</p>
+              <p>Trade is shown in <span class='blueText'>blue</span> and includes things such as:</p>
               <ul>
                   <li>Capital goods</li>
                   <li>Industrial goods</li>                  
-                  <li>Auto and auto parts</li>
-              
+                  <li>Auto and auto parts</li>              
               </ul>
-          
+              <p>Services are shown in <span class='redText'>red</span> and includes things such as:</p>
+              <ul>
+                  <li>Financial transactions</li>
+                  <li>Insurance</li>                  
+                  <li>Maintenance</li>              
+                  <li>Charges from intellectual property</li>
+              </ul>                  
           </td>
-      </tr>
-	  
+      </tr>	  
     </table>    
   </div>
 </div>
