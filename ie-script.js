@@ -142,13 +142,12 @@
       .select("#export_value")
       .text('Exports: ' + convert(d.exports));         
         
-    //Show the tooltip
-    d3.select("#tooltip").classed("hidden", false);         
-        })
-    //Hide the tooltip
-        .on('mouseout', function() {
+    
+    d3.select("#tooltip").classed("hidden", false);         //Show the tooltip
+    })
+        .on('mouseout', function() {                            //Hide the tooltip
         d3.select("#tooltip").classed("hidden", true);
-    });        
+    } );        
         
         
         
