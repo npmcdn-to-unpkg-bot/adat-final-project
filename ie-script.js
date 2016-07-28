@@ -12,7 +12,7 @@
   var binCount = 10;
     
   // FETCH DATA
-  d3.json('import-export-2.json', function (error, json) {
+  d3.json('ie-data.json', function (error, json) {
     if (error) { throw error; }
     data = json;
       
