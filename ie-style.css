@@ -2,7 +2,7 @@
 	background-color: #D3E3E8;
 	font-family: 'Trebuchet MS', Helvetica, sans-serif;
 	font-size: 16px;	
-    color: #C95508;
+    color: #9C4206;
         
     }     
     a:link, a:visited {
@@ -23,13 +23,13 @@
     }
     .axis path, .axis line {
       fill: none;
-      stroke: #C95508;
+      stroke: #9C4206;
       shape-rendering: crispEdges;
 
     }
     .axis text {
         font-size: 14px;
-        fill: #C95508;
+        fill: #9C4206;
     }
     .label {
       font-weight: 700;
@@ -39,12 +39,6 @@
       opacity: .5;
     }
 
-      
-    
-	table {
-		table-layout: auto;
-        vertical-align: top;
-	}
       .blueText {
           color: #6971F4;
           font-weight: bold;
@@ -58,13 +52,11 @@
       }
       
       #tooltip {
-/*        position: absolute;*/
         width: 300px;
         height: auto;
         padding: 10px;
         background-color: #F0F7C3;
         border-radius: 10px;
-
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
         pointer-events: none;
       }

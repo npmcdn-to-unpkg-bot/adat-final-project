@@ -5,7 +5,6 @@
     region: 'All'
   };
     
-//  var svg, x, y;
   var margin = { top: 15, right: 55, bottom: 100, left: 70  };
   var width = 800 - margin.right - margin.left;
   var height = 600 - margin.top - margin.bottom;
@@ -24,13 +23,12 @@
     d3.select('#region').on('change', function () {
       options.region = d3.event.target.value;
         charts.forEach(function (chart) { chart.update(); });
-//        console.log('event', options.region);
     });      
       
   });
 
     
-  function Chart(xvar, xtitle, yvar, ytitle) {
+    function Chart(xvar, xtitle, yvar, ytitle) {
       var chart = this;
       
       chart.xvar = xvar;
@@ -85,21 +83,7 @@
           .attr('x', -height/2)      
           .style('text-anchor', 'middle')      
           .text(ytitle);                 
-        
-/*      chart.tool = d3.tip()
-      .attr('class', 'tooltip')
-      .offset([-6, 0])
-      .html(function(d) { return d.country + d.type ; });
-      .html(function(d) { 
-          var getCountry = document.getElementById(d.country);      
-          console.log('tip', getCountry);
-          
-          
-          
-          return d3.selectAll(getCountry) ; });      */
-
-//    chart.tool(chart.svg);      
-      
+              
       chart.update();
       
   }
@@ -124,8 +108,7 @@
     points.enter().append('circle')
       .attr('class', 'point')
       .attr('r', 7)
-//    .attr('fill', function (d) { return 'red' ? d.type === 'trade' : 'blue'; })   
-  .attr('fill', function (d) { 
+      .attr('fill', function (d) { 
             if (d.type === 'trade') { return 'blue'; }
             else { return 'red'; } 
         });
@@ -133,30 +116,18 @@
     // define function to convert big numbers to something readable
     function convert(num) {
         if (num > 1000000) {
-            convert.output = num/1000000;                
+            convert.output = num/1000000;
+            convert.output = convert.output.toFixed(1);
             convert.output += ' trillion';        
         } else if (num > 1000) {
             convert.output = num/1000;      
+            convert.output = convert.output.toFixed(1);            
             convert.output += ' billion';        
         }        
         return '$' + convert.output;
     }        
        
     // mouseover     
-/*    points    
-      .on('mouseover', function(d) {       
-    d3.select("#tooltip")
-      .select("#country")
-      .text(d.country + ', ' + convert(d.imports));
-    //Show the tooltip
-    d3.select("#tooltip").classed("hidden", false);         
-        })
-    //Hide the tooltip
-        .on('mouseout', function() {
-        d3.select("#tooltip").classed("hidden", true);
-    });*/
-
-        
     points    
       .on('mouseover', function(d) {       
     d3.select("#tooltip")
@@ -188,9 +159,6 @@
         
       points.exit()
           .transition().duration(80)
-          .remove();
-
-
-    
+          .remove();    
   }
 
