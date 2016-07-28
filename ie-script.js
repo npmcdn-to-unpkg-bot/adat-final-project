@@ -5,7 +5,7 @@
     region: 'All'
   };
     
-  var margin = { top: 15, right: 55, bottom: 100, left: 70  };
+  var margin = { top: 15, right: 55, bottom: 100, left: 77  };
   var width = 800 - margin.right - margin.left;
   var height = 600 - margin.top - margin.bottom;
   var binCount = 10;
