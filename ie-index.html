@@ -128,7 +128,7 @@
                   <li>Industrial goods</li>                  
                   <li>Auto and auto parts</li>              
               </ul>
-              <p>Services are shown in <span class='redText'>red</span> and includes things such as:</p>
+              <p>Services are shown in <span class='redText'>red</span> and include things such as:</p>
               <ul>
                   <li>Financial transactions</li>
                   <li>Insurance</li>                  
@@ -165,14 +165,14 @@
     data = json;
       
     var charts = [
-          new Chart('imports', 'Imports', 'exports', 'Exports')
+          new Chart('imports', 'US Imports, sqrt of millions of USD', 'exports', 'US Exports, sqrt of millions of USD')
           ];
       
     // EVENT HANDLERS
     d3.select('#region').on('change', function () {
       options.region = d3.event.target.value;
         charts.forEach(function (chart) { chart.update(); });
-        console.log('event', options.region);
+//        console.log('event', options.region);
     });      
       
   });
@@ -258,7 +258,7 @@
     Chart.prototype.update = function () {
     var chart = this;
     IEdata = data.slice();
-        console.log('reg is', options.region);
+//        console.log('reg is', options.region);
         
     if (options.region !== 'All') {
         
