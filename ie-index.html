@@ -3,79 +3,11 @@
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <title>Week 8: Beginning of the End</title>
+  <title>Week 8: Trade Data</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
-  <style>
-    body {
-	background-color: #D3E3E8;
-	font-family: 'Trebuchet MS', Helvetica, sans-serif;
-	font-size: 16px;	
-    color: #C95508;
-        
-    }     
-    a:link, a:visited {
-    color: #ffb1b9;          
-                  
-      }
-    .section {
-      padding: 1em 0;
-    }
-    .header {
-      background: linear-gradient(to bottom, #302e39 0%, #5f5b71 100%); 
-      color: #ff944d;
-      padding: 1em 0 2em;
-    }
-    svg {
-      display: block;
-      margin: 0 auto;
-    }
-    .axis path, .axis line {
-      fill: none;
-      stroke: #C95508;
-      shape-rendering: crispEdges;
-    }
-    .axis text {
-        font-size: 14px;
-        fill: #C95508;
-    }
-    .label {
-      font-weight: 700;
-    }
-    .point {
-/*      stroke: rgb(51, 122, 183);*/
-      stroke-width: 1;
-/*      fill: rgba(51, 122, 183, .5);*/
-      opacity: .5;
-    }
-    .line {
-      stroke: rgb(175, 80, 75);
-      stroke-width: 2;
-    } 
-      
-    .axis .minor line {
-      stroke: #C95508;
-      stroke-dasharray: 2,2;
-    }      
-	table {
-		table-layout: auto;
-        vertical-align: top;
-	}
-      .blueText {
-          color: #6971F4;
-          font-weight: bold;
-          font-size: 20px;
-      }
-      
-      .redText {
-          color: #E97174;          
-          font-weight: bold;          
-          font-size: 20px;          
-      }
-      
-   
-             
-      
-  </style>
+    
+  <link rel="stylesheet" href="ie-style.css">    
+
 </head>
 <body>
 <div class='header section'>
@@ -102,14 +34,7 @@
       </select>
     </div>
   </div>
-</div>
-<!--<div class='main section'>
-  <div class='container'>
-    <div id='chart'></div>
-  </div>
-</div>-->
-    
-    
+</div>    
     
 <div class='main section'>
   <div class='container'; style='color: black'>
@@ -120,13 +45,14 @@
 <!--          <td style='width: 20%; vertical-align: top'>-->
           <td style='vertical-align: top'>              
 <!--        <td><div id="legend" style="border: 1px solid #ccc"></div>-->
-          <h3>Legend:</h3>
-              <p>All figures in the square root of millions of USD.</p>
+          <h3>Legend:</h3>                            
+              <p>Axis figures in the square root of millions of USD. Tooltip shows actual trade values.</p>
               <p>Trade is shown in <span class='blueText'>blue</span> and includes things such as:</p>
               <ul>
                   <li>Capital goods</li>
                   <li>Industrial goods</li>                  
-                  <li>Auto and auto parts</li>              
+                  <li>Auto and auto parts</li>  
+                  <li>Consumer goods</li>
               </ul>
               <p>Services are shown in <span class='redText'>red</span> and include things such as:</p>
               <ul>
@@ -135,6 +61,11 @@
                   <li>Maintenance</li>              
                   <li>Charges from intellectual property</li>
               </ul>                  
+              <div id="tooltip" class="hidden">
+                <p><strong><span id="country"></span></strong></p>
+                <p><span id="import_value"></span></p>                  
+                <p><span id="export_value"></span></p>                                    
+              </div> 
           </td>
       </tr>	  
     </table>    
@@ -144,162 +75,9 @@
     <script type='text/javascript' src='https://npmcdn.com/d3@3.5.17/d3.min.js'></script>
     <script type='text/javascript' src='https://npmcdn.com/science@1.9.3/science.v1.min.js'></script>
     <script type='text/javascript' src='https://npmcdn.com/simple-statistics@2.0.0/dist/simple-statistics.min.js'></script>
-    <script type="text/javascript" src="https://npmcdn.com/d3-tip@0.6.7/index.js"></script>
+    <script type="text/javascript" src="https://npmcdn.com/d3-tip@0.6.7/index.js"></script>    
     
-<script>
-  var data = [];
-
-  var options = {
-    region: 'All'
-  };
+    <script type="text/javascript" src="ie-script.js"></script>
     
-//  var svg, x, y;
-  var margin = { top: 15, right: 55, bottom: 100, left: 70  };
-  var width = 800 - margin.right - margin.left;
-  var height = 600 - margin.top - margin.bottom;
-  var binCount = 10;
-    
-  // FETCH DATA
-  d3.json('import-export.json', function (error, json) {
-    if (error) { throw error; }
-    data = json;
-      
-    var charts = [
-          new Chart('imports', 'US Imports, sqrt of millions of USD', 'exports', 'US Exports, sqrt of millions of USD')
-          ];
-      
-    // EVENT HANDLERS
-    d3.select('#region').on('change', function () {
-      options.region = d3.event.target.value;
-        charts.forEach(function (chart) { chart.update(); });
-//        console.log('event', options.region);
-    });      
-      
-  });
-
-    
-  function Chart(xvar, xtitle, yvar, ytitle) {
-      var chart = this;
-      
-      chart.xvar = xvar;
-      chart.yvar = yvar;
-      chart.color = d3.scale.category10();
-      
-
-    // SVG
-      chart.svg = d3.select('#chart')
-      .append('svg')
-      .attr('width', width + margin.right + margin.left)
-      .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-      
-    // SCALES
- 
-      chart.x = d3.scale.linear()
-        .domain([0, d3.max(data, function (d) { return d[xvar]; })])
-        .range([0, width])
-        .nice();
-      
-      chart.y = d3.scale.linear()
-      .domain([0, d3.max(data, function (d) { return d[yvar]; })])    
-      .range([height, 0])    
-      .nice();
-      
-    // AXES
-      var xAxis = d3.svg.axis()
-      .scale(chart.x)
-      .tickSize(-height);
-      
-      var yAxis = d3.svg.axis()
-      .scale(chart.y)
-      .tickSize(-width)
-      .orient('left');   
-      
-      chart.svg.append('g')      
-          .attr('class', 'x axis')
-          .call(xAxis)
-          .attr('transform', 'translate(0,' + (height) + ')')
-        .append('text')
-          .attr('x', width/2)
-          .attr('y', 70)
-          .style('text-anchor', 'middle')
-          .text(xtitle);            
-      
-      chart.svg.append('g')
-          .attr('class', 'y axis')
-          .call(yAxis)
-        .append('text')
-          .attr('transform', 'rotate(-90)')
-          .attr('y', -60)
-          .attr('x', -height/2)      
-          .style('text-anchor', 'middle')      
-          .text(ytitle);                 
-        
-      chart.tool = d3.tip()
-      .attr('class', 'tooltip')
-      .offset([-6, 0])
-      .html(function(d) { return d.country + d.type ; });
-/*      .html(function(d) { 
-          var getCountry = document.getElementById(d.country);      
-          console.log('tip', getCountry);
-          
-          
-          
-          return d3.selectAll(getCountry) ; });      */
-
-    chart.tool(chart.svg);      
-      
-      chart.update();
-      
-  }
-      
-          
-    Chart.prototype.update = function () {
-    var chart = this;
-    IEdata = data.slice();
-//        console.log('reg is', options.region);
-        
-    if (options.region !== 'All') {
-        
-      IEdata = IEdata.filter(function (d) {
-        return d.region == options.region;
-      });
-    }
-      
-
-        
-    // SCATTERPLOT
-    var points = chart.svg.selectAll('.point')
-      .data(IEdata);
-        
-    points.enter().append('circle')
-      .attr('class', 'point')
-      .attr('r', 7)
-//    .attr('fill', function (d) { return 'red' ? d.type === 'trade' : 'blue'; })   
-  .attr('fill', function (d) { 
-            if (d.type === 'trade') { return 'blue'; }
-            else { return 'red'; } 
-        })    
-      .on('mouseover', chart.tool.show)
-      .on('mouseout', chart.tool.hide); 
-
-        
-    points
-    .transition().duration(700)
-      .attr('cx', function (d) { return chart.x(d.imports); })
-      .attr('cy', function (d) { return chart.y(d.exports); });        
-        
-      points.exit()
-          .transition().duration(80)
-          .remove();
-
-
-      
-    // REGRESSION LINE
-  }
-
-</script>
-        
 </body>
-</html>
+</html>    

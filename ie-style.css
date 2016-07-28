@@ -1,0 +1,74 @@
+    body {
+	background-color: #D3E3E8;
+	font-family: 'Trebuchet MS', Helvetica, sans-serif;
+	font-size: 16px;	
+    color: #C95508;
+        
+    }     
+    a:link, a:visited {
+    color: #ffb1b9;          
+                  
+      }
+    .section {
+      padding: 1em 0;
+    }
+    .header {
+      background: linear-gradient(to bottom, #302e39 0%, #5f5b71 100%); 
+      color: #ff944d;
+      padding: 1em 0 2em;
+    }
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+    .axis path, .axis line {
+      fill: none;
+      stroke: #C95508;
+      shape-rendering: crispEdges;
+
+    }
+    .axis text {
+        font-size: 14px;
+        fill: #C95508;
+    }
+    .label {
+      font-weight: 700;
+    }
+    .point {
+      stroke-width: 1;
+      opacity: .5;
+    }
+
+      
+    
+	table {
+		table-layout: auto;
+        vertical-align: top;
+	}
+      .blueText {
+          color: #6971F4;
+          font-weight: bold;
+          font-size: 20px;
+      }
+      
+      .redText {
+          color: #E97174;          
+          font-weight: bold;          
+          font-size: 20px;          
+      }
+      
+      #tooltip {
+/*        position: absolute;*/
+        width: 300px;
+        height: auto;
+        padding: 10px;
+        background-color: #F0F7C3;
+        border-radius: 10px;
+
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+      }
+
+    #tooltip.hidden {
+            display: none;
+    }
