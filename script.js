@@ -11,7 +11,7 @@
   var binCount = 10;
     
   // FETCH DATA
-  d3.json('ie-data.json', function (error, json) {
+  d3.json('data.json', function (error, json) {
     if (error) { throw error; }
     data = json;
       
