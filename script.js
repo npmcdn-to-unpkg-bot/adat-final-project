@@ -152,14 +152,15 @@
     .filter(function(e) {
         return e.country == d.country;
         })
-    .attr('class', 'point_pair');
+//    .attr('class', 'point_pair')
+    .classed('point_pair', true);
         
         
     d3.select("#tooltip").classed("hidden", false);         //Show the tooltip
     })
         .on('mouseout', function(d) {                            //Hide the tooltip
         d3.select("#tooltip").classed("hidden", true);
-        d3.selectAll('.point_pair').remove();       
+        d3.selectAll('.point_pair').classed('point_pair', false);
     } );        
         
 
