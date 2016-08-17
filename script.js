@@ -105,13 +105,19 @@
     var points = chart.svg.selectAll('.point')
       .data(IEdata);
         
+    function color(d) {
+            if (d.type === 'trade') { return 'blue'; }
+            else { return 'red'; }         
+    }    
+        
     points.enter().append('circle')
       .attr('class', 'point')
       .attr('r', 7)
-      .attr('fill', function (d) { 
+/*      .attr('fill', function (d) { 
             if (d.type === 'trade') { return 'blue'; }
             else { return 'red'; } 
-        });
+        });*/
+        .attr('fill', color);
 
     // define function to convert big numbers to something readable
     function convert(num) {
@@ -127,6 +133,13 @@
         return '$' + convert.output;
     }        
        
+/*        points.on("mouseover", function(d) {
+  d3.select(this).attr("r", 10).style("fill", "red");
+})                  
+.on("mouseout", function(d) {
+  d3.select(this).attr("r", 5.5).style("fill", "#fff8ee");
+});   */     
+        
     // mouseover     
     points    
       .on('mouseover', function(d) {       
@@ -140,15 +153,26 @@
         
     d3.select("#tooltip")
       .select("#export_value")
-      .text('Exports: ' + convert(d.exports));         
+      .text('Exports: ' + convert(d.exports));  
         
-    
+    d3.selectAll('.point')
+    .filter(function(e) {
+        return e.country == d.country;
+        })
+    .attr('class', 'pointz');
+        
+        
     d3.select("#tooltip").classed("hidden", false);         //Show the tooltip
     })
-        .on('mouseout', function() {                            //Hide the tooltip
+        .on('mouseout', function(d) {                            //Hide the tooltip
         d3.select("#tooltip").classed("hidden", true);
+        d3.selectAll('pointz').remove();       
+                
+        
     } );        
         
+
+
         
         
     points

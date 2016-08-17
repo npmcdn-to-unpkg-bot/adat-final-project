@@ -64,3 +64,21 @@
     #tooltip.hidden {
             display: none;
     }
+
+.pointz {
+/*    fill: black;*/
+    r: 20;
+    fill: green;
+    stroke: black;
+      stroke-width: 3;
+      opacity: .5;    
+}
+
+    #pointz.hidden {
+/*            display: none;*/
+        opacity: .0;
+/*
+      stroke-width: 1;
+      opacity: .5;        
+*/
+    }
