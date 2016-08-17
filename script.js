@@ -159,7 +159,7 @@
     })
         .on('mouseout', function(d) {                            //Hide the tooltip
         d3.select("#tooltip").classed("hidden", true);
-        d3.selectAll('point_pair').remove();       
+        d3.selectAll('.point_pair').remove();       
     } );        
         
 
